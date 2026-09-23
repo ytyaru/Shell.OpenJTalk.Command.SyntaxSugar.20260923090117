@@ -1,0 +1,10 @@
+${SUMMARY}	${VERSION}
+${THIS_NAME} [-f] [-o OPT] POS1 POS2 POS3 ...
+Arguments:
+  STDIN  
+  POS1   
+Parameters:
+  -f                     
+  -o|--option 'default'  
+Examples:
+  ${THIS_NAME} -h
