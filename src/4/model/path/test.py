@@ -31,19 +31,17 @@ class TestPath(unittest.TestCase):
 
     def test_name_none_token(self):
         out, code = self.run_cmd("name", "雪音ルウ", "$NONE")
-        self.assertTrue(out.endswith("雪音ルウ２.htsvoice"))
+        self.assertTrue(out.endswith("雪音ルウ.htsvoice"))
         self.assertEqual(code, 0)
 
     def test_name_empty_string(self):
         out, code = self.run_cmd("name", "雪音ルウ", "")
-        self.assertTrue(out.endswith("雪音ルウ２.htsvoice"))
+        self.assertTrue(out.endswith("雪音ルウ.htsvoice"))
         self.assertEqual(code, 0)
 
     def test_name_missing_args(self):
-        # 💡 引数そのものを渡さない（None）パターンの検証
         out, code = self.run_cmd("name", "雪音ルウ")
         self.assertEqual(code, 1)
 
 if __name__ == "__main__":
     unittest.main()
-

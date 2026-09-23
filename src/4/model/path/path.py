@@ -35,7 +35,7 @@ def cmd_model(model_name):
     if os.path.exists(full_path):
         print(full_path)
     else:
-        print(f"エラー: 指定された音声モデルファイルが実在しません: {full_path}", file=sys.stderr)
+        print(f"エラー: 指定された音声モデルファイルが実在しません: ${full_path}", file=sys.stderr)
         sys.exit(1)
 
 def cmd_name(speaker, tone, has_tone_arg):
@@ -43,16 +43,13 @@ def cmd_name(speaker, tone, has_tone_arg):
         print("エラー: 話者名が必要です", file=sys.stderr)
         sys.exit(1)
     
-    # 💡 引数そのものが指定されていない場合はエラー
     if not has_tone_arg:
         print("エラー: 調子の引数が足りません。調子がない場合は '$NONE' または '' (空文字) を指定してください。modelコマンドで直接指定したほうが早いでしょう。", file=sys.stderr)
         sys.exit(1)
         
-    # '$NONE' または 空文字の場合のみ「何もない状態」と判定
-    actual_tone = "" if tone in ["$NONE", ""] else tone
+    actual_tone = "$NONE" if tone in ["$NONE", ""] else tone
     
-    # 解決時に調子が空なら下位レイヤーに $NONE を引き渡す
-    res = subprocess.run([sys.executable, OJT_NAME_PY, "get", speaker, actual_tone or "$NONE"], capture_output=True, text=True)
+    res = subprocess.run([sys.executable, OJT_NAME_PY, "get", speaker, actual_tone], capture_output=True, text=True)
     if res.returncode != 0:
         print("エラー: 指定された話者名と調子の組み合わせが辞書にありません", file=sys.stderr)
         sys.exit(1)
@@ -62,15 +59,16 @@ def cmd_name(speaker, tone, has_tone_arg):
 
 def main():
     if len(sys.argv) < 2: print_help()
-    subcommand = sys.argv
+    
+    # 💡 修正: インデックスを 1 ではなく 2, 3 から正確に取得する
+    subcommand = sys.argv[1] if len(sys.argv) > 1 else ""
     
     if subcommand == "model":
-        query = sys.argv if len(sys.argv) > 2 else ""
+        query = sys.argv[2] if len(sys.argv) > 2 else ""
         cmd_model(query)
     elif subcommand == "name":
-        spk = sys.argv if len(sys.argv) > 2 else ""
-        tone = sys.argv if len(sys.argv) > 3 else ""
-        # 引数が3つ（path.py name 話者名）より多く存在するかを厳密に判定
+        spk = sys.argv[2] if len(sys.argv) > 2 else ""
+        tone = sys.argv[3] if len(sys.argv) > 3 else ""
         has_tone_arg = len(sys.argv) > 3
         cmd_name(spk, tone, has_tone_arg)
     else:
@@ -78,4 +76,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
