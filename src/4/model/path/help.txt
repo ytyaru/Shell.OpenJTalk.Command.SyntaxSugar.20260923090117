@@ -1,0 +1,12 @@
+OpenJTalkの音声モデルフルパス取得スクリプト。
+モデル名または話者名＋調子のいずれかで.htsvoiceのフルパスを取得する。
+[使用例]
+  model {モデル名}           指定音声モデル名に該当する.htsvoiceフルパスを返す。なければエラー。
+                             (例: model 蒼歌ネロ -> .../voice/蒼歌ネロ.htsvoice)
+                             (例: model mei_normal -> .../voice/mei_normal.htsvoice)
+  name {話者名} {調子}       指定話者名と調子に該当する.htsvoiceフルパスを返す。なければエラー。
+                             調子の値が何もない場合は '$NONE' または '' (空文字) を指定してください。
+                             (例: name mei normal -> .../voice/mei_normal.htsvoice)
+                             (例: name 雪音ルウ '$NONE' -> .../voice/雪音ルウ２.htsvoice)
+[音声モデル参照パス]
+  ${OJT_VOICE_ROOT}
