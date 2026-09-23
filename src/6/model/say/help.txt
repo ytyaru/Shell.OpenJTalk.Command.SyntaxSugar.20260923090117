@@ -1,0 +1,26 @@
+OpenJTalkで指定したテキストを発話または音声ファイル出力する。
+[使用例]
+-m mei_normal '発話テキスト。再生だけ。ファイル出力しない。'
+-m mai:normal '発話テキスト。再生だけ。ファイル出力しない。'
+-m mei_normal -f mp3 'mp3ファイルを出力したあと再生する'
+silent -m mai:normal '発話せずwavファイルだけ出力する'
+silent -m mai:normal -o /tmp/0.wav '発話せずwavファイルだけ出力する'
+silent -m mai:normal -o /tmp/0.mp3 '発話せずmp3ファイルだけ出力する'
+silent -m mai:normal -o /tmp/0.{wav,mp3,ogg,flac} '再生せずwav,mp3,ogg,flacファイルを出力する'
+-m 海賊まさver4 '発話テキスト。再生だけ。ファイル出力しない。'
+-m 海賊まさ:4 '発話テキスト。再生だけ。ファイル出力しない。'
+-m 雪音ルウ '発話テキスト。再生だけ。ファイル出力しない。'
+-m 雪音ルウ: '発話テキスト。再生だけ。ファイル出力しない。'
+-d ~/mydic/ -m 雪音ルウ: -k 2.0 -v 3 -f wav,mp3,ogg,flac '発話テキスト'
+[サブコマンド]
+silent                              再生せずファイル出力のみ。
+[任意引数]
+-d --dict {path}                    辞書を変更する（デフォルトはconfig.shのDIC_DEFでセットする）
+-m --model {モデル名|話者名:調子}   音声モデルを変更する（調子が空なら'雪音ルウ:'等）
+-k --key {N}                        音程を変更する（1.0=半音↑, -2.0=2半音↓等）
+-v --volume {N}                     音量を変更する（dB。正数↑, 負数↓）
+-f --format {wav,mp3,ogg,flac}      出力形式を変更する（複数ならカンマ区切り）
+-o --output {path}                  出力先を変更する（デフォルトはカレントディレクトリ/ojt.wav）
+[参照パス]
+  音声モデル: ${OJT_VOICE_ROOT}
+  辞書      : ${OJT_DIC}
